@@ -108,16 +108,26 @@ export default function StockChart(props) {
         //   count: 1,
         //   text: "1D",
         // },
+        // {
+        //     type: "week",
+        //     count: 1,
+        //     text: "1W",
+        //   },
+        // {
+        //     type:"week",
+        //     count: 1,
+        //     text:"1W",
+        // },
         {
           type: "month",
           count: 1,
           text: "1M",
         },
-        // {
-        //   type: "week",
-        //   count: 1,
-        //   text: "1W",
-        // },
+        {
+           type: "month",
+            count: 6,
+            text: "6M",
+        },
         {
           type: "all",
           text: "All",
@@ -141,11 +151,16 @@ export default function StockChart(props) {
     if (displayedFlags < buySellIndicators.length - 1)
       setDisplayedFlags(displayedFlags + 1);
   };
+  const handleDisplayallFlag=()=>{
+    if (displayedFlags < buySellIndicators.length - 1)
+        setDisplayedFlags(buySellIndicators.length -1)
+  }
   return (
     <>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       <div>
         <button onClick={() => handleButtonClick()}>Display Next</button>
+        <button onClick={() => handleDisplayallFlag()}>Display All</button>
       </div>
     </>
   )
