@@ -133,27 +133,27 @@
     {
       "img": "img/team/01.jpg",
       "name": "Priyank Parmar",
-      "job": "ML"
+      "job": "ML Scientist"
     },
     {
       "img": "img/team/02.jpg",
       "name": "Shivam Panchal",
-      "job": "ML"
+      "job": "ML Developer"
     },
     {
       "img": "img/team/03.jpg",
       "name": "Rohan Joshi",
-      "job": "ML"
+      "job": "ML Intern"
     },
     {
       "img": "img/team/04.jpeg",
       "name": "Yash Patel",
-      "job": "Web Developer"
+      "job": "Frontend Intern"
     },
     {
       "img": "img/team/05.jpg",
       "name": "Priyank Akbari",
-      "job": "Web Developer"
+      "job": "Fullstack Intern"
     }
   ],
   "Contact": {
@@ -166,22 +166,22 @@
   },
   "Features": [
     {
-      "icon": "fa fa-comments-o",
+      "img": "img/features/realtime-analysis.png",
       "title": "Real-time market analysis",
       "text": "Our platform uses machine learning algorithms to analyze market data in real-time, giving you up-to-the-minute insights into market trends and patterns."
     },
     {
-      "icon": "fa fa-bullhorn",
-      "title": "Customizable trading strategies",
+      "img": "img/features/trading-indication.png",
+      "title": "AI based Trading Indication",
       "text": "With our platform, you can customize your trading strategies based on your own unique trading style and risk tolerance."
     },
     {
-      "icon": "fa fa-group",
+      "img": "img/features/user-friendly.png",
       "title": "User-friendly interface",
       "text": " Our platform is designed to be intuitive and easy to use, with a clean and modern interface that makes it easy to navigate and find the information you need."
     },
     {
-      "icon": "fa fa-magic",
+      "img": "img/features/advanced-charting.png",
       "title": "Advanced charting",
       "text": "Our platform offers advanced charting capabilities, with a range of technical indicators and drawing tools to help you analyze market trends and patterns."
     }
