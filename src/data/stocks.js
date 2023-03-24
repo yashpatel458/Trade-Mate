@@ -1,6 +1,6 @@
 export const stocks=[
     {
-        name: "PNB",
+        name: "SBIN.NS",
     },
     {
         name:"TCS",
