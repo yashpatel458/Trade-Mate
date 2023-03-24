@@ -48,12 +48,15 @@ export default function StockChart(props) {
       ],
     },
     series: [
-      {
-        type: "line",
-        name: "Stock Price",
-        data: filteredData.map((item) => [item.timestamp, item.price]),
-        color: "#21B6A8",
-      },
+      1 == 1
+        ? {
+            type: "line",
+            name: "Stock Price",
+            data: filteredData.map((item) => [item.timestamp, item.price]),
+            color: "#21B6A8",
+          }
+        : null,
+
       // {
       //   type: "line",
       //   name: "new stock Stock Price",

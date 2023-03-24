@@ -24,7 +24,7 @@ export default function Dropdown(props) {
           label={Label}
         >
           {items.map((item) => (
-            <MenuItem sx={classes.dropdownItems} value={attribute != null ? item[attribute] : item}>
+            <MenuItem sx={classes.dropdownItems} value={item["value"]}>
               {attribute != null ? item[attribute] : item}
             </MenuItem>
           ))}

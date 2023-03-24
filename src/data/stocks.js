@@ -1,17 +1,22 @@
 export const stocks=[
     {
-        name: "SBIN.NS",
+        name:'SBI',
+        value: "SBIN.NS",
     },
     {
-        name:"TCS",
+        name:'PNB',
+        value:"PNB.NS",
     },
     {
-        name:"TCS",
+        name:'ITC',
+        value:"ITC.NS",
     },
     {
-        name:"TCS",
+        name:'OIL',
+        value:"OIL.NS",
     },
     {
-        name:"TCS",
+        name:"ADANIPORTS",
+        value:"ADANIPORTS.NS"
     },
 ]

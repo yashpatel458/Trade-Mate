@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useState, useEffect } from "react";
 import StockChart from "../StockChart";
@@ -19,6 +19,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { fetchChartData, fetchBuySellData } from "./predictService";
 import "react-datepicker/dist/react-datepicker.css";
+// import Loading from "../../global/Loading";
 
 export const Predict = (props) => {
   const data_ = [
@@ -68,8 +69,13 @@ export const Predict = (props) => {
   const [stockName, setStockName] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [data, setData_] = useState(data_);
+  const [dataQLA, setDataQLA] = useState();
   const [value, setValue] = useState(null);
   const [indicationDataRA, setIndicationDataRA] = useState();
+  const [indicationDataAA, setIndicationDataAA] = useState();
+  const [indicationDataQLA, setIndicationDataQLA] = useState();
+  // const [isLoading, setIsLoading] = useState(false);
+
   const classes = predictStyle;
 
   const buySellIndicators = [
@@ -101,24 +107,53 @@ export const Predict = (props) => {
   };
   const handlePredict = async () => {
     if (stockName != undefined && selectedDate != undefined) {
+      // setIsLoading(true);
       let allDataRes = await fetchChartData(
         stockName,
         selectedDate,
         "Rolling Agent"
       );
-      let buySellRes = await fetchBuySellData(
+      let allDataQLA = await fetchChartData(
+        stockName,
+        "2018-01-01",
+        "Q-learning Agent"
+      );
+      let buySellRA = await fetchBuySellData(
         stockName,
         selectedDate,
         "Rolling Agent"
       );
+      let buySellAA = await fetchBuySellData(
+        stockName,
+        selectedDate,
+        "Average Agent"
+      );
+      let buySellQLA = await fetchBuySellData(
+        stockName,
+        selectedDate,
+        "Q-learning Agent"
+      );
       allDataRes.data.filter(
         (item) => (item.timestamp = Date.parse(item.timestamp))
       );
-      buySellRes.data.filter(
+      allDataQLA.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      buySellRA.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      buySellAA.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      buySellQLA.data.filter(
         (item) => (item.timestamp = Date.parse(item.timestamp))
       );
       setData_(allDataRes.data);
-      setIndicationDataRA(buySellRes.data);
+      setDataQLA(allDataQLA.data);
+      setIndicationDataRA(buySellRA.data);
+      setIndicationDataAA(buySellAA.data);
+      setIndicationDataQLA(buySellQLA.data);
+      // setIsLoading(false);
     } else {
       console.log("stockname OR selecteddate is undefined");
     }
@@ -187,10 +222,18 @@ export const Predict = (props) => {
           {data !== undefined && indicationDataRA !== undefined ? (
             <StockChart data={data} buySellIndicators={indicationDataRA} />
           ) : null}
+          <Typography>Profit Loss:</Typography>
+          {data !== undefined && indicationDataAA !== undefined ? (
+            <StockChart data={data} buySellIndicators={indicationDataAA} />
+          ) : null}
+          {dataQLA !== undefined && indicationDataQLA !== undefined ? (
+            <StockChart data={dataQLA} buySellIndicators={indicationDataQLA} />
+          ) : null}
 
           {/* <StockChart data={data} buySellIndicators={indicationData} /> */}
         </div>
       </div>
+      {/* <Loading /> */}
     </div>
   );
 };
