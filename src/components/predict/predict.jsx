@@ -3,11 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import StockChart from "../StockChart";
 import predictStyle from "./predict.style";
-import { useState, useEffect } from "react";
-import StockChart from "../StockChart";
-import predictStyle from "./predict.style";
 import Dropdown from "../../global/components/DropDown/Dropdown";
-import CustomButton from "../../global/components/CustomButton/CustomButton";;
+import CustomButton from "../../global/components/CustomButton/CustomButton";
 import { stocks } from "../../data/stocks";
 import { Grid } from "@material-ui/core";
 // import DatePicker from "react-datepicker";
@@ -71,13 +68,7 @@ export const Predict = (props) => {
   const [stockName, setStockName] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [data, setData_] = useState(data_);
-  const [indicationDataRA, setIndicationDataRA] = useState();
-  const classes = predictStyle;
-
-  const [stockName, setStockName] = useState();
-  const [selectedDate, setSelectedDate] = useState();
-  const [data, setData] = useState(data_);
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = useState(null);
   const [indicationDataRA, setIndicationDataRA] = useState();
   const classes = predictStyle;
 
@@ -95,44 +86,9 @@ export const Predict = (props) => {
     setStockName(event.target.value);
   };
   const handleDateChange = (date) => {
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    if (day < 10) {
-      day = "0" + day;
-    }
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
-    setSelectedDate(formattedDate);
-  };
-  const handlePredict = async () => {
-    if (stockName != undefined && selectedDate != undefined) {
-      let allDataRes = await fetchChartData(
-        stockName,
-        selectedDate,
-        "Rolling Agent"
-      );
-      let buySellRes = await fetchBuySellData(
-        stockName,
-        selectedDate,
-        "Rolling Agent"
-      );
-      allDataRes.data.filter(
-        (item) => (item.timestamp = Date.parse(item.timestamp))
-      );
-      buySellRes.data.filter(
-        (item) => (item.timestamp = Date.parse(item.timestamp))
-      );
-      setData_(allDataRes.data);
-      setIndicationDataRA(buySellRes.data);
-    } else {
-  const handleDateChange = (date) => {
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
+    const year = date.$y;
+    let month = date.$M + 1;
+    let day = date.$D;
     if (day < 10) {
       day = "0" + day;
     }
@@ -207,9 +163,9 @@ export const Predict = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   // label="Basic example"
-                  value={value}
+                  value={selectedDate}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    handleDateChange(newValue);
                   }}
                   renderInput={(params) => (
                     <TextField sx={classes.datePicker} {...params} />
@@ -219,12 +175,12 @@ export const Predict = (props) => {
             </Grid>
           </Grid>
           {/* <CustomButton label="Predict" onClick={handlePredict} /> */}
-          <a onClick={handlePredict} className="btn btn-custom btn-lg page-scroll">
+          <a
+            onClick={handlePredict}
+            className="btn btn-custom btn-lg page-scroll"
+          >
             Explore
           </a>{" "}
-          <p>
-            selected date:{selectedDate && selectedDate.toLocaleDateString()}
-          </p>
         </div>
 
         <div className="row">
