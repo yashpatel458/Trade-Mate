@@ -3,11 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import StockChart from "../StockChart";
 import predictStyle from "./predict.style";
-import { useState, useEffect } from "react";
-import StockChart from "../StockChart";
-import predictStyle from "./predict.style";
 import Dropdown from "../../global/components/DropDown/Dropdown";
-import CustomButton from "../../global/components/CustomButton/CustomButton";;
+import CustomButton from "../../global/components/CustomButton/CustomButton";
 import { stocks } from "../../data/stocks";
 import { Grid } from "@material-ui/core";
 // import DatePicker from "react-datepicker";
@@ -16,10 +13,8 @@ import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 // import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import DateFnsUtils from "@date-io/date-fns";
-
 import { fetchChartData, fetchBuySellData } from "./predictService";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -68,15 +63,11 @@ export const Predict = (props) => {
     { timestamp: Date.parse("2016-05-16"), price: 150 },
     { timestamp: Date.parse("2016-05-17"), price: 160.0 },
   ];
-  const [stockName, setStockName] = useState();
-  const [selectedDate, setSelectedDate] = useState();
-  const [data, setData_] = useState(data_);
-  const [indicationDataRA, setIndicationDataRA] = useState();
-  const classes = predictStyle;
+
 
   const [stockName, setStockName] = useState();
   const [selectedDate, setSelectedDate] = useState();
-  const [data, setData] = useState(data_);
+  const [data, setData_] = useState(data_);
   const [value, setValue] = React.useState(null);
   const [indicationDataRA, setIndicationDataRA] = useState();
   const classes = predictStyle;
@@ -94,41 +85,7 @@ export const Predict = (props) => {
   const handleStockNameChange = (event) => {
     setStockName(event.target.value);
   };
-  const handleDateChange = (date) => {
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    if (day < 10) {
-      day = "0" + day;
-    }
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
-    setSelectedDate(formattedDate);
-  };
-  const handlePredict = async () => {
-    if (stockName != undefined && selectedDate != undefined) {
-      let allDataRes = await fetchChartData(
-        stockName,
-        selectedDate,
-        "Rolling Agent"
-      );
-      let buySellRes = await fetchBuySellData(
-        stockName,
-        selectedDate,
-        "Rolling Agent"
-      );
-      allDataRes.data.filter(
-        (item) => (item.timestamp = Date.parse(item.timestamp))
-      );
-      buySellRes.data.filter(
-        (item) => (item.timestamp = Date.parse(item.timestamp))
-      );
-      setData_(allDataRes.data);
-      setIndicationDataRA(buySellRes.data);
-    } else {
+ 
   const handleDateChange = (date) => {
     const year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -206,7 +163,6 @@ export const Predict = (props) => {
               /> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  // label="Basic example"
                   value={value}
                   onChange={(newValue) => {
                     setValue(newValue);
@@ -232,7 +188,6 @@ export const Predict = (props) => {
             <StockChart data={data} buySellIndicators={indicationDataRA} />
           ) : null}
 
-          {/* <StockChart data={data} buySellIndicators={indicationData} /> */}
         </div>
       </div>
     </div>
