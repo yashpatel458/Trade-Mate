@@ -6,10 +6,13 @@ import predictStyle from "./predict.style"
 import Dropdown from "../../global/components/DropDown/Dropdown";
 import { stocks } from "../../data/stocks";
 import { Grid } from "@material-ui/core";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const Predict = (props) => {
 
   const [stockName,setStockName]=useState();
+  const [selectedDate,setSelectedDate]=useState();
   const classes=predictStyle;
   const data_ = [
     { timestamp: Date.parse("2016-01-04"), price: 100 },
@@ -69,6 +72,9 @@ export const Predict = (props) => {
     setStockName(event.target.value);
     console.log(event.target.value);
   };
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  }
   return (
     <div id="predict" className="text-center">
       <div className="container">
@@ -86,7 +92,16 @@ export const Predict = (props) => {
             attribute="name"
             items={stocks}
           />
-          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={4} md={3.5}>
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="yyyy-mm-dd" // customize date format if needed
+        />
+        </Grid>
+        <p>selected date:{selectedDate&& selectedDate.toLocaleDateString()}</p>
+
           {/* <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Stock Name
