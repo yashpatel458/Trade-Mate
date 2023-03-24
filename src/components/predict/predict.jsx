@@ -13,13 +13,11 @@ import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 // import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import DateFnsUtils from "@date-io/date-fns";
-
 import { fetchChartData, fetchBuySellData } from "./predictService";
 import "react-datepicker/dist/react-datepicker.css";
-// import Loading from "../../global/Loading";
+import CustomLoader from "../../global/components/CustomLoader/CustomLoader";
 
 export const Predict = (props) => {
   const data_ = [
@@ -66,6 +64,7 @@ export const Predict = (props) => {
     { timestamp: Date.parse("2016-05-16"), price: 150 },
     { timestamp: Date.parse("2016-05-17"), price: 160.0 },
   ];
+
   const [stockName, setStockName] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [data, setData_] = useState(data_);
@@ -77,6 +76,7 @@ export const Predict = (props) => {
   // const [isLoading, setIsLoading] = useState(false);
 
   const classes = predictStyle;
+  const [isLoading, setIsLoading] = useState(false);
 
   const buySellIndicators = [
     { timestamp: Date.parse("2016-01-05"), action: "buy", price: 110 },
@@ -107,7 +107,7 @@ export const Predict = (props) => {
   };
   const handlePredict = async () => {
     if (stockName != undefined && selectedDate != undefined) {
-      // setIsLoading(true);
+      setIsLoading(true);
       let allDataRes = await fetchChartData(
         stockName,
         selectedDate,
@@ -153,8 +153,9 @@ export const Predict = (props) => {
       setIndicationDataRA(buySellRA.data);
       setIndicationDataAA(buySellAA.data);
       setIndicationDataQLA(buySellQLA.data);
-      // setIsLoading(false);
+      setIsLoading(false);
     } else {
+      setIsLoading(false);
       console.log("stockname OR selecteddate is undefined");
     }
   };
@@ -162,7 +163,7 @@ export const Predict = (props) => {
     <div id="predict" className="text-center">
       <div className="container">
         <div className="section-title">
-          <h2>Predict</h2>
+          <h2>Predict the future</h2>
         </div>
         <div>
           <Grid container mt={6} spacing={2} sx={classes.external}>
@@ -188,7 +189,15 @@ export const Predict = (props) => {
               })}
             </div>
           </div> */}
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              xl={6}
+              alignSelf="center"
+            >
               {/* <DatePicker
               sx={classes.datePicker}
                 selected={selectedDate}
@@ -210,11 +219,8 @@ export const Predict = (props) => {
             </Grid>
           </Grid>
           {/* <CustomButton label="Predict" onClick={handlePredict} /> */}
-          <a
-            onClick={handlePredict}
-            className="btn btn-custom btn-lg page-scroll"
-          >
-            Explore
+          <a onClick={handlePredict} className="btn btn-custom">
+            VISUALIZE
           </a>{" "}
         </div>
 
@@ -222,6 +228,9 @@ export const Predict = (props) => {
           {data !== undefined && indicationDataRA !== undefined ? (
             <StockChart data={data} buySellIndicators={indicationDataRA} />
           ) : null}
+          <h3>
+                      PROFIT/LOSS PERCENTAGE: <span>33%</span>
+                    </h3>
           <Typography>Profit Loss:</Typography>
           {data !== undefined && indicationDataAA !== undefined ? (
             <StockChart data={data} buySellIndicators={indicationDataAA} />
@@ -229,11 +238,10 @@ export const Predict = (props) => {
           {dataQLA !== undefined && indicationDataQLA !== undefined ? (
             <StockChart data={dataQLA} buySellIndicators={indicationDataQLA} />
           ) : null}
-
+            <CustomLoader open={isLoading} />
           {/* <StockChart data={data} buySellIndicators={indicationData} /> */}
         </div>
       </div>
-      {/* <Loading /> */}
     </div>
   );
 };
