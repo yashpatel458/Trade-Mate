@@ -1,6 +1,6 @@
 const predictStyle = {
   external: {
-    display: "flex",
+    // display: "flex",
     fontFamily: "Poppins",
     fontSize: "20px",
     fontWeight: "bold",

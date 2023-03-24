@@ -17,6 +17,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // import DateFnsUtils from "@date-io/date-fns";
 import { fetchChartData, fetchBuySellData } from "./predictService";
 import "react-datepicker/dist/react-datepicker.css";
+import CustomLoader from "../../global/components/CustomLoader/CustomLoader";
 
 export const Predict = (props) => {
   const data_ = [
@@ -64,13 +65,13 @@ export const Predict = (props) => {
     { timestamp: Date.parse("2016-05-17"), price: 160.0 },
   ];
 
-
   const [stockName, setStockName] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [data, setData_] = useState(data_);
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = useState(null);
   const [indicationDataRA, setIndicationDataRA] = useState();
   const classes = predictStyle;
+  const [isLoading, setIsLoading] = useState(false);
 
   const buySellIndicators = [
     { timestamp: Date.parse("2016-01-05"), action: "buy", price: 110 },
@@ -85,11 +86,10 @@ export const Predict = (props) => {
   const handleStockNameChange = (event) => {
     setStockName(event.target.value);
   };
- 
   const handleDateChange = (date) => {
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
+    const year = date.$y;
+    let month = date.$M + 1;
+    let day = date.$D;
     if (day < 10) {
       day = "0" + day;
     }
@@ -102,6 +102,7 @@ export const Predict = (props) => {
   };
   const handlePredict = async () => {
     if (stockName != undefined && selectedDate != undefined) {
+      setIsLoading(true);
       let allDataRes = await fetchChartData(
         stockName,
         selectedDate,
@@ -120,7 +121,9 @@ export const Predict = (props) => {
       );
       setData_(allDataRes.data);
       setIndicationDataRA(buySellRes.data);
+      setIsLoading(false);
     } else {
+      setIsLoading(false);
       console.log("stockname OR selecteddate is undefined");
     }
   };
@@ -128,7 +131,7 @@ export const Predict = (props) => {
     <div id="predict" className="text-center">
       <div className="container">
         <div className="section-title">
-          <h2>Predict</h2>
+          <h2>Predict the future</h2>
         </div>
         <div>
           <Grid container mt={6} spacing={2} sx={classes.external}>
@@ -154,7 +157,15 @@ export const Predict = (props) => {
               })}
             </div>
           </div> */}
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              xl={6}
+              alignSelf="center"
+            >
               {/* <DatePicker
               sx={classes.datePicker}
                 selected={selectedDate}
@@ -163,9 +174,10 @@ export const Predict = (props) => {
               /> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  value={value}
+                  // label="Basic example"
+                  value={selectedDate}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    handleDateChange(newValue);
                   }}
                   renderInput={(params) => (
                     <TextField sx={classes.datePicker} {...params} />
@@ -175,19 +187,19 @@ export const Predict = (props) => {
             </Grid>
           </Grid>
           {/* <CustomButton label="Predict" onClick={handlePredict} /> */}
-          <a onClick={handlePredict} className="btn btn-custom btn-lg page-scroll">
-            Explore
+          <a onClick={handlePredict} className="btn btn-custom">
+            VISUALIZE
           </a>{" "}
-          <p>
-            selected date:{selectedDate && selectedDate.toLocaleDateString()}
-          </p>
         </div>
 
         <div className="row">
           {data !== undefined && indicationDataRA !== undefined ? (
             <StockChart data={data} buySellIndicators={indicationDataRA} />
           ) : null}
-
+          <h3>
+            PROFIT/LOSS PERCENTAGE: <span>33%</span>
+          </h3>
+          <CustomLoader open={isLoading} />
         </div>
       </div>
     </div>

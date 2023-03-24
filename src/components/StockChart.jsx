@@ -22,6 +22,7 @@ export default function StockChart(props) {
     chart: {
       backgroundColor: "#000",
       style: {
+        fontFamily: "Poppins",
         color: "#FFF",
         fontWeight: "bold",
         fontSize: "15px",
@@ -68,13 +69,14 @@ export default function StockChart(props) {
           y: indicator.price,
           title: indicator.action.toUpperCase(),
           text: `$${indicator.price.toFixed(2)}`,
-          margin: "2px",
+          padding: "20px",
           shape: "circlepin",
           fillColor: indicator.action === "buy" ? "#28a745" : "#dc3545",
         })),
         onSeries: "Stock Price",
         shape: "squarepin",
-        width: 20,
+        width: 24,
+        height:23,
         color: Highcharts.getOptions().colors?.at(1), // same as onSeries
         fillColor: Highcharts.getOptions().colors?.at(2),
         // visible: showFlags,
@@ -84,13 +86,13 @@ export default function StockChart(props) {
       type: "datetime",
       title: {
         style: {
-          color: "#FFF",
+          color: "#5ca9fb",
         },
         text: "Date",
       },
       labels: {
         style: {
-          color: "#FFF",
+          color: "#ffffffdd",
         },
         formatter: function () {
           // format the datetime label to show only the date
@@ -105,12 +107,12 @@ export default function StockChart(props) {
       title: {
         text: "Price ",
         style: {
-          color: "#FFF",
+          color: "#34d797",
         },
       },
       labels: {
         style: {
-          color: "#FFF",
+          color: "#ffffffdd",
         },
       },
       gridLineWidth: 0,
@@ -181,19 +183,17 @@ export default function StockChart(props) {
       <div>
         <a
           onClick={() => handleButtonClick()}
-          className="btn btn-custom btn-lg page-scroll"
+          className="btn predict-button"
         >
           Display Next
         </a>
         <a
           onClick={() => handleDisplayallFlag()}
-          className="btn btn-custom btn-lg page-scroll"
+          className="btn predict-button"
         >
           Display All
         </a>
-        {/* 
-        <button onClick={() => handleButtonClick()}>Display Next</button>
-        <button onClick={() => handleDisplayallFlag()}>Display All</button> */}
+
       </div>
     </>
   );

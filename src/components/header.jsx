@@ -16,7 +16,7 @@ export const Header = (props) => {
                   href="#predict"
                   className="btn btn-custom btn-lg page-scroll"
                 >
-                  Explore
+                  Try for free
                 </a>{" "}
               </div>
             </div>

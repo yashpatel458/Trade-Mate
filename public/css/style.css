@@ -178,6 +178,30 @@ C21919
 .section-title p {
   font-size: 18px;
 }
+.predict-button{
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #a32121;
+  background-image: linear-gradient(to right, #a32121 0%, #d73434 100%);
+  padding: 14px 34px;
+  letter-spacing: 1px;
+  margin: 80 50;
+  font-size: 15px;
+  font-weight: 500;
+  /* border-radius: 25px; */
+  transition: all 0.5s linear;
+  border: 0;
+}
+.predict-button:hover,
+.predict-button:focus,
+.predict-button.focus,
+.predict-button:active,
+.predict-button.active {
+  color: #fff;
+  background-image: none;
+  background-color: #000000;
+}
 .btn-custom {
   font-family: "Poppins", sans-serif;
   text-transform: uppercase;
@@ -238,7 +262,7 @@ a:focus,
 .intro h1 {
   font-family: "Poppins", sans-serif;
   color: #fff;
-  font-size: 102px;
+  font-size: 90px;
   font-weight: 700;
   text-transform: uppercase;
   margin-top: 0;
@@ -396,6 +420,13 @@ h3 {
 #predict .service-desc {
   margin-bottom: 40px;
 }
+#predict .row span{
+  font-weight: 600;
+  font-size: 22px;
+  color: #34D797;
+}
+
+
 /* Portfolio Section */
 #portfolio {
   padding: 150px 0;
