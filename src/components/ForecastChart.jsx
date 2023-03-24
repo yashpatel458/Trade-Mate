@@ -2,18 +2,8 @@ import { HighchartsReact } from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 import { useState } from "react";
 
-export default function StockChart(props) {
-  const { data, buySellIndicators, title } = props;
-  // const [showFlags, setShowFlags] = useState(false); //display flags when showFlags is true
-
-  // Initialize state for controlling the displayed flags
-  const [displayedFlags, setDisplayedFlags] = useState(0);
-
-  // Filter the data based on the latest flag clicked
-  const filteredData = data.filter(
-    (item) => item.timestamp <= buySellIndicators[displayedFlags].timestamp
-  );
-  const filterIndicators = buySellIndicators.slice(0, displayedFlags + 1);
+export default function ForecastChart(props) {
+  const { data, arimaForecastData, lstmForecastData, title } = props;
 
   const chartOptions = {
     title: {
@@ -49,40 +39,23 @@ export default function StockChart(props) {
       ],
     },
     series: [
-      1 == 1
-        ? {
-            type: "line",
-            name: "Stock Price",
-            data: filteredData.map((item) => [item.timestamp, item.price]),
-            color: "#21B6A8",
-          }
-        : null,
-
-      // {
-      //   type: "line",
-      //   name: "new stock Stock Price",
-      //   data: data.map((item: any) => [item.timestamp, item.price + 20]),
-      //   color: "blue",
-      // },
       {
-        type: "flags",
-        // name: "Buy/Sell Indicators",
-        data: filterIndicators.map((indicator) => ({
-          x: indicator.timestamp,
-          y: indicator.price,
-          title: indicator.action.toUpperCase(),
-          text: `$${indicator.price.toFixed(2)}`,
-          padding: "20px",
-          shape: "circlepin",
-          fillColor: indicator.action === "buy" ? "#28a745" : "#dc3545",
-        })),
-        onSeries: "Stock Price",
-        shape: "squarepin",
-        width: 24,
-        height: 23,
-        color: Highcharts.getOptions().colors?.at(1), // same as onSeries
-        fillColor: Highcharts.getOptions().colors?.at(2),
-        // visible: showFlags,
+        type: "line",
+        name: "Stock Price",
+        data: data.map((item) => [item.timestamp, item.price]),
+        color: "#818589",
+      },
+      {
+        type: "line",
+        name: "Arima",
+        data: arimaForecastData.map((item) => [item.timestamp, item.price]),
+        color: "blue",
+      },
+      {
+        type: "line",
+        name: "Lstm",
+        data: lstmForecastData.map((item) => [item.timestamp, item.price]),
+        color: "green",
       },
     ],
     xAxis: {
@@ -105,6 +78,7 @@ export default function StockChart(props) {
           day: "%Y-%m-%d",
         },
       },
+      lineWidth: 0,
     },
     yAxis: {
       title: {
@@ -119,6 +93,7 @@ export default function StockChart(props) {
         },
       },
       gridLineWidth: 0,
+      lineWidth: 0,
     },
     rangeSelector: {
       allButtonsEnabled: true,
@@ -128,21 +103,6 @@ export default function StockChart(props) {
         fontWeight: "bold",
       },
       buttons: [
-        // {
-        //   type: "day",
-        //   count: 1,
-        //   text: "1D",
-        // },
-        // {
-        //     type: "week",
-        //     count: 1,
-        //     text: "1W",
-        //   },
-        // {
-        //     type:"week",
-        //     count: 1,
-        //     text:"1W",
-        // },
         {
           type: "month",
           count: 1,
@@ -172,18 +132,10 @@ export default function StockChart(props) {
     },
   };
 
-  const handleButtonClick = () => {
-    if (displayedFlags < buySellIndicators.length - 1)
-      setDisplayedFlags(displayedFlags + 1);
-  };
-  const handleDisplayallFlag = () => {
-    if (displayedFlags < buySellIndicators.length - 1)
-      setDisplayedFlags(buySellIndicators.length - 1);
-  };
   return (
     <>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-      <div>
+      {/* <div>
         <a onClick={() => handleButtonClick()} className="btn predict-button">
           Display Next
         </a>
@@ -193,7 +145,7 @@ export default function StockChart(props) {
         >
           Display All
         </a>
-      </div>
+      </div> */}
     </>
   );
 }
