@@ -16,23 +16,10 @@ export const Contact = (props) => {
           <div className="col-md-12">
             <div className="row">
               <div className="social">
-                <ul>
-                  <li>
-                    <a href={props.data ? props.data.facebook : "/"}>
-                      <i className="fa fa-facebook"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href={props.data ? props.data.twitter : "/"}>
-                      <i className="fa fa-twitter"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href={props.data ? props.data.youtube : "/"}>
-                      <i className="fa fa-youtube"></i>
-                    </a>
-                  </li>
-                </ul>
+                <p>
+                  Made with ☠ by Runtime Terror
+                </p>
+   
               </div>
             </div>
           </div>
@@ -40,9 +27,6 @@ export const Contact = (props) => {
       </div>
       <div id="footer">
         <div className="container text-center">
-          <p>
-            Made with ☠ by Runtime Terror
-          </p>
           <p>
             Developed at{" "}
             <a href="https://www.softsages.com/" rel="nofollow">
