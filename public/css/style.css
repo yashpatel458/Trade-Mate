@@ -348,11 +348,17 @@ header .intro-text {
   color: #ffffff;
 
 }
-#about img {
-  width: 520px;
+#about .img-1{
+  width: 80%;
   margin-top: 10px;
   border-right: 0;
 }
+#about .img-2{
+  width: 450px;
+  margin-top: 10px;
+align-items: center;
+}
+
 #about p {
   line-height: 24px;
   margin: 30px 0;
@@ -494,11 +500,11 @@ header .intro-text {
 #team {
 
   padding: 120px 0;
-  background-color: #000000;
+  background-color: #fdfdfd;
 }
 #team h4, h2 {
   margin: 5px 0;
-  color: #fff;
+  color: #000000;
 }
 #team .team-img {
   border-radius: 50%;
@@ -520,19 +526,24 @@ header .intro-text {
 }
 #team .thumbnail .caption {
   padding: 10px 0 0;
-  color: #b3b3b3;
+  color: #757575;
   font-family: "Poppins";
 }
 /* Contact Section */
 #contact {
-  /* padding: 100px 0 60px; */
-  background: linear-gradient(to right, #21a36f  0%, #34D797  100%);
-  color: rgb(255, 255, 255);
+  padding: 200px 0;
+  background-image: url("../img/about.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background: linear-gradient(to right, #21a36f  0%, #34D797  100%); */
+  color: rgb(221, 221, 221);
+  font-family: "Poppins", sans-serif;
+
 }
 
 #contact .social p {
 
-  font-size: 18px;
+  font-size: 45px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
 }
@@ -548,7 +559,9 @@ header .intro-text {
 }
 #footer p {
   color: #ffffff;
-  font-size: 12px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+
 }
 #footer a {
   color: #34D797  ;

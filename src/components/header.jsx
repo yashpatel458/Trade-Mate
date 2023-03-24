@@ -13,7 +13,7 @@ export const Header = (props) => {
                   <span></span>
                 </h1>
                 <a
-                  href="#features"
+                  href="#predict"
                   className="btn btn-custom btn-lg page-scroll"
                 >
                   Explore

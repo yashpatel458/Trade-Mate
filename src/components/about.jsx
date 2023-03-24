@@ -7,7 +7,9 @@ export const About = (props) => {
         <div className="row">
           <div className="col-xs-12 col-md-6">
             {" "}
-            <img src="img/about.gif" className="img-responsive" alt="" />{" "}
+            {/* <img src="img/about.gif" className="img-1" alt="" />{" "} */}
+            <img src="img/about.png" className="img-2" alt="" />{" "}
+
           </div>
           <div className="col-xs-12 col-md-6">
             <div className="about-text">
