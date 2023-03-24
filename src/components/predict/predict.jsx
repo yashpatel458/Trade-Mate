@@ -1,15 +1,15 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useState,useEffect } from "react";
-import StockChart from "../StockChart";  
-import predictStyle from "./predict.style"
+import { useState, useEffect } from "react";
+import StockChart from "../StockChart";
+import predictStyle from "./predict.style";
 import Dropdown from "../../global/components/DropDown/Dropdown";
-import CustomButton from "../../global/components/CustomButton/CustomButton"
+import CustomButton from "../../global/components/CustomButton/CustomButton";
 import { stocks } from "../../data/stocks";
 import { Grid } from "@material-ui/core";
-import DatePicker from 'react-datepicker';
-import {fetchChartData} from "./predictService"
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import { fetchChartData, fetchBuySellData } from "./predictService";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Predict = (props) => {
   const data_ = [
@@ -54,39 +54,65 @@ export const Predict = (props) => {
     { timestamp: Date.parse("2016-05-14"), price: 130 },
     { timestamp: Date.parse("2016-05-15"), price: 140 },
     { timestamp: Date.parse("2016-05-16"), price: 150 },
-    { timestamp: Date.parse("2016-05-17"), price: 160 },
+    { timestamp: Date.parse("2016-05-17"), price: 160.0 },
   ];
-  const [stockName,setStockName]=useState();
-  const [selectedDate,setSelectedDate]=useState();
-  const [data,setData] = useState(data_);
-  const classes=predictStyle;
-  
+  const [stockName, setStockName] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [data, setData_] = useState(data_);
+  const [indicationDataRA, setIndicationDataRA] = useState();
+  const classes = predictStyle;
+
   const buySellIndicators = [
     { timestamp: Date.parse("2016-01-05"), action: "buy", price: 110 },
     { timestamp: Date.parse("2016-01-09"), action: "buy", price: 150 },
     { timestamp: Date.parse("2016-01-10"), action: "sell", price: 160 },
     { timestamp: Date.parse("2016-01-11"), action: "buy", price: 100 },
     { timestamp: Date.parse("2016-01-17"), action: "sell", price: 160 },
-    { 'timestamp': Date.parse("2016-04-14"), 'action': "sell", 'price': 130 },
+    { timestamp: Date.parse("2016-04-14"), action: "sell", price: 130 },
   ];
   // const newData=[{'timestamp': 1452018600.0, 'action': 'buy', 'price': 216.85000610351562}, {'timestamp': 1452623400.0, 'action': 'buy', 'price': 200.89999389648438}, {'timestamp': 1453228200.0, 'action': 'sell', 'price': 173.64999389648438}, {'timestamp': 1453919400.0, 'action': 'sell', 'price': 185.25}, {'timestamp': 1462386600.0, 'action': 'buy', 'price': 180.35000610351562}, {'timestamp': 1464892200.0, 'action': 'buy', 'price': 196.60000610351562}, {'timestamp': 1471977000.0, 'action': 'buy', 'price': 254.39999389648438}, {'timestamp': 1475001000.0, 'action': 'sell', 'price': 253.75}, {'timestamp': 1477938600.0, 'action': 'sell', 'price': 258.95001220703125}, {'timestamp': 1484764200.0, 'action': 'sell', 'price': 258.3999938964844}];
-
 
   const handleStockNameChange = (event) => {
     setStockName(event.target.value);
   };
-  const handleDateChange = date => {
-
-    setSelectedDate(Date.parse(date).toString("yyyy-MM-dd"));
-  }
-  const handlePredict=async()=>{
-    if(stockName!=undefined && selectedDate!=undefined){
-      const res=await fetchChartData(stockName, selectedDate,"Rolling Agent");
-      setData(res);
-    }else{
+  const handleDateChange = (date) => {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    if (day < 10) {
+      day = "0" + day;
+    }
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
+    setSelectedDate(formattedDate);
+  };
+  const handlePredict = async () => {
+    if (stockName != undefined && selectedDate != undefined) {
+      let allDataRes = await fetchChartData(
+        stockName,
+        selectedDate,
+        "Rolling Agent"
+      );
+      let buySellRes = await fetchBuySellData(
+        stockName,
+        selectedDate,
+        "Rolling Agent"
+      );
+      allDataRes.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      buySellRes.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      setData_(allDataRes.data);
+      setIndicationDataRA(buySellRes.data);
+    } else {
       console.log("stockname OR selecteddate is undefined");
     }
-  }
+  };
   return (
     <div id="predict" className="text-center">
       <div className="container">
@@ -94,29 +120,25 @@ export const Predict = (props) => {
           <h2>Predict</h2>
         </div>
         <div>
-        <Grid item xs={12} sm={4} md={3.5}>
-        <Dropdown
-            Label="Stock Name"
-            formClasses={classes.form}
-            value={stockName}
-            onChangeHandle={handleStockNameChange}
-            SelectClasses={classes.dropdown}
-            attribute="name"
-            items={stocks}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3.5}>
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          dateFormat="yyyy-mm-dd" // customize date format if needed
-        />
-        </Grid>
-        <CustomButton
-            label="Predict"
-            onClick={handlePredict}
-          />
-        <p>selected date:{selectedDate&& selectedDate.toLocaleDateString()}</p>
+          <Grid item xs={12} sm={4} md={3.5}>
+            <Dropdown
+              Label="Stock Name"
+              formClasses={classes.form}
+              value={stockName}
+              onChangeHandle={handleStockNameChange}
+              SelectClasses={classes.dropdown}
+              attribute="name"
+              items={stocks}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4} md={3.5}>
+            <DatePicker
+              // selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="yyyy-mm-dd" // customize date format if needed
+            />
+          </Grid>
+          <CustomButton label="Predict" onClick={handlePredict} />
 
           {/* <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -131,7 +153,11 @@ export const Predict = (props) => {
         </div>
 
         <div className="row">
-          <StockChart data={data_} buySellIndicators={buySellIndicators}/>
+          {data !== undefined && indicationDataRA !== undefined ? (
+            <StockChart data={data} buySellIndicators={indicationDataRA} />
+          ) : null}
+
+          {/* <StockChart data={data} buySellIndicators={indicationData} /> */}
         </div>
       </div>
     </div>

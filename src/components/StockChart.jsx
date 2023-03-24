@@ -3,7 +3,7 @@ import Highcharts from "highcharts/highstock";
 import { useState } from "react";
 
 export default function StockChart(props) {
-    const { data, buySellIndicators } = props;
+  const { data, buySellIndicators } = props;
   // const [showFlags, setShowFlags] = useState(false); //display flags when showFlags is true
 
   // Initialize state for controlling the displayed flags
@@ -33,6 +33,19 @@ export default function StockChart(props) {
       style: {
         color: "#000",
       },
+    },
+    scales: {
+      xAxes: [
+        {
+          type: "time",
+          time: {
+            unit: "day",
+            displayFormats: {
+              day: "YYYY-MM-DD",
+            },
+          },
+        },
+      ],
     },
     series: [
       {
@@ -73,11 +86,18 @@ export default function StockChart(props) {
         style: {
           color: "#FFF",
         },
-        text: "Time",
+        text: "Date",
       },
       labels: {
         style: {
           color: "#FFF",
+        },
+        formatter: function () {
+          // format the datetime label to show only the date
+          return Highcharts.dateFormat("%Y-%m-%d", this.value);
+        },
+        dateTimeLabelFormats: {
+          day: "%Y-%m-%d",
         },
       },
     },
@@ -124,9 +144,9 @@ export default function StockChart(props) {
           text: "1M",
         },
         {
-           type: "month",
-            count: 6,
-            text: "6M",
+          type: "month",
+          count: 6,
+          text: "6M",
         },
         {
           type: "all",
@@ -151,17 +171,17 @@ export default function StockChart(props) {
     if (displayedFlags < buySellIndicators.length - 1)
       setDisplayedFlags(displayedFlags + 1);
   };
-  const handleDisplayallFlag=()=>{
+  const handleDisplayallFlag = () => {
     if (displayedFlags < buySellIndicators.length - 1)
-        setDisplayedFlags(buySellIndicators.length -1)
-  }
+      setDisplayedFlags(buySellIndicators.length - 1);
+  };
   return (
     <>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       <div>
-        <button onClick={() => handleButtonClick()}>Display Next</button>
-        <button onClick={() => handleDisplayallFlag()}>Display All</button>
+        {/* <button onClick={() => handleButtonClick()}>Display Next</button>
+        <button onClick={() => handleDisplayallFlag()}>Display All</button> */}
       </div>
     </>
-  )
+  );
 }
