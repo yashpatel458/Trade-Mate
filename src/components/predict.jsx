@@ -18,7 +18,7 @@ export const Predict = (props) => {
     { timestamp: Date.parse("2016-01-15"), price: 140 },
     { timestamp: Date.parse("2016-01-16"), price: 150 },
     { timestamp: Date.parse("2016-01-17"), price: 160 },
-    { timestamp: Date.parse("2016-02-11"), price: 1000 },
+    { timestamp: Date.parse("2016-02-11"), price: 100 },
     { timestamp: Date.parse("2016-02-12"), price: 110 },
     { timestamp: Date.parse("2016-02-13"), price: 120 },
     { timestamp: Date.parse("2016-02-14"), price: 130 },
