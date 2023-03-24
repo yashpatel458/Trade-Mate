@@ -354,7 +354,7 @@ h3 {
 }
 /* Predict Section */
 #predict {
-  height: 100vh;
+  height: fit-content;
   padding: 150px 0;
   background: linear-gradient(to right, #313fbe 0%, #001f41 100%);
   color: #fff;
