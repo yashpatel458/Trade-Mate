@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
+import classes from "./Dropdown.style";
 
 export default function Dropdown(props) {
   const {
@@ -18,12 +19,12 @@ export default function Dropdown(props) {
         <Select
           value={value}
           onChange={onChangeHandle}
-          sx={SelectClasses}
+          sx={classes.dropdown}
           labelId={Label + "-label"}
           label={Label}
         >
           {items.map((item) => (
-            <MenuItem value={attribute != null ? item[attribute] : item}>
+            <MenuItem sx={classes.dropdownItems} value={attribute != null ? item[attribute] : item}>
               {attribute != null ? item[attribute] : item}
             </MenuItem>
           ))}

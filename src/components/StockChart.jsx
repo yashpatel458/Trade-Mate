@@ -179,7 +179,20 @@ export default function StockChart(props) {
     <>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       <div>
-        {/* <button onClick={() => handleButtonClick()}>Display Next</button>
+        <a
+          onClick={() => handleButtonClick()}
+          className="btn btn-custom btn-lg page-scroll"
+        >
+          Display Next
+        </a>
+        <a
+          onClick={() => handleDisplayallFlag()}
+          className="btn btn-custom btn-lg page-scroll"
+        >
+          Display All
+        </a>
+        {/* 
+        <button onClick={() => handleButtonClick()}>Display Next</button>
         <button onClick={() => handleDisplayallFlag()}>Display All</button> */}
       </div>
     </>

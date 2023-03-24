@@ -3,11 +3,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 import StockChart from "../StockChart";
 import predictStyle from "./predict.style";
+import { useState, useEffect } from "react";
+import StockChart from "../StockChart";
+import predictStyle from "./predict.style";
 import Dropdown from "../../global/components/DropDown/Dropdown";
-import CustomButton from "../../global/components/CustomButton/CustomButton";
+import CustomButton from "../../global/components/CustomButton/CustomButton";;
 import { stocks } from "../../data/stocks";
 import { Grid } from "@material-ui/core";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+// import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+// import DateFnsUtils from "@date-io/date-fns";
+
 import { fetchChartData, fetchBuySellData } from "./predictService";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -62,6 +74,13 @@ export const Predict = (props) => {
   const [indicationDataRA, setIndicationDataRA] = useState();
   const classes = predictStyle;
 
+  const [stockName, setStockName] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [data, setData] = useState(data_);
+  const [value, setValue] = React.useState(null);
+  const [indicationDataRA, setIndicationDataRA] = useState();
+  const classes = predictStyle;
+
   const buySellIndicators = [
     { timestamp: Date.parse("2016-01-05"), action: "buy", price: 110 },
     { timestamp: Date.parse("2016-01-09"), action: "buy", price: 150 },
@@ -110,6 +129,41 @@ export const Predict = (props) => {
       setData_(allDataRes.data);
       setIndicationDataRA(buySellRes.data);
     } else {
+  const handleDateChange = (date) => {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    if (day < 10) {
+      day = "0" + day;
+    }
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
+    setSelectedDate(formattedDate);
+  };
+  const handlePredict = async () => {
+    if (stockName != undefined && selectedDate != undefined) {
+      let allDataRes = await fetchChartData(
+        stockName,
+        selectedDate,
+        "Rolling Agent"
+      );
+      let buySellRes = await fetchBuySellData(
+        stockName,
+        selectedDate,
+        "Rolling Agent"
+      );
+      allDataRes.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      buySellRes.data.filter(
+        (item) => (item.timestamp = Date.parse(item.timestamp))
+      );
+      setData_(allDataRes.data);
+      setIndicationDataRA(buySellRes.data);
+    } else {
       console.log("stockname OR selecteddate is undefined");
     }
   };
@@ -120,27 +174,20 @@ export const Predict = (props) => {
           <h2>Predict</h2>
         </div>
         <div>
-          <Grid item xs={12} sm={4} md={3.5}>
-            <Dropdown
-              Label="Stock Name"
-              formClasses={classes.form}
-              value={stockName}
-              onChangeHandle={handleStockNameChange}
-              SelectClasses={classes.dropdown}
-              attribute="name"
-              items={stocks}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4} md={3.5}>
-            <DatePicker
-              // selected={selectedDate}
-              onChange={handleDateChange}
-              dateFormat="yyyy-mm-dd" // customize date format if needed
-            />
-          </Grid>
-          <CustomButton label="Predict" onClick={handlePredict} />
-
-          {/* <div className="dropdown">
+          <Grid container mt={6} spacing={2} sx={classes.external}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+              <Dropdown
+                sx={classes.external}
+                // Label={"Stock Name"}
+                formClasses={classes.form}
+                value={stockName}
+                onChangeHandle={handleStockNameChange}
+                SelectClasses={classes.dropdown}
+                attribute="name"
+                items={stocks}
+              />
+            </Grid>
+            {/* <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Stock Name
             </button> 
@@ -150,6 +197,34 @@ export const Predict = (props) => {
               })}
             </div>
           </div> */}
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+              {/* <DatePicker
+              sx={classes.datePicker}
+                selected={selectedDate}
+                onChange={handleDateChange}
+                dateFormat="yyyy-mm-dd" // customize date format if needed
+              /> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  // label="Basic example"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField sx={classes.datePicker} {...params} />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+          {/* <CustomButton label="Predict" onClick={handlePredict} /> */}
+          <a onClick={handlePredict} className="btn btn-custom btn-lg page-scroll">
+            Explore
+          </a>{" "}
+          <p>
+            selected date:{selectedDate && selectedDate.toLocaleDateString()}
+          </p>
         </div>
 
         <div className="row">

@@ -7,19 +7,23 @@ import {
 
 const customButtonStyles = {
   btnStyle: {
-    ...customButtonStyle,
-    ...mediumFont,
-    width: "100%",
+    width: "20%",
     padding: "10px 20px",
-    ...centerItemFlex,
-    "&:disabled": {
-      color: "rgb(255 255 255 / 50%)",
-    },
+    backgroundColor: "white",
+    fontStyle: "bold",
+    fontSize: "14px",
+    fontFamily: "Poppins, sans-serif",
+    borderRadius: "50px",
   },
-  glydeGif: {
-    width: "15px",
-    height: "15px",
-  },
+  // btnStyle:  hover {
+  //   width: "20%",
+  //   padding: "10px 20px",
+  //   backgroundColor: "white",
+  //   fontStyle: "bold",
+  //   fontSize: "14px",
+  //   fontFamily: "Poppins, sans-serif",
+  //   borderRadius: "50px",
+  // },
   loadingStyle: {
     color: "white",
     width: "25px !important",
