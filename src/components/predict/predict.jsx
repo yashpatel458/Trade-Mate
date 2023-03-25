@@ -228,50 +228,53 @@ export const Predict = (props) => {
 
         <div className="row">
           {data !== undefined && indicationDataRA !== undefined ? (
-            <StockChart
-              data={data}
-              buySellIndicators={indicationDataRA}
-              title={"Rolling Agent"}
-            />
+            <>
+              <StockChart
+                data={data}
+                buySellIndicators={indicationDataRA}
+                title={"Rolling Agent"}
+              />
+              <h3>
+                PROFIT/LOSS PERCENTAGE: <span>{accuracyRA.toFixed(2)}%</span>
+              </h3>
+              <div
+                style={{ marginBottom: "150px", border: "1px solid white" }}
+              ></div>
+            </>
           ) : null}
-          {accuracyRA !== undefined ? (
-            <h3>
-              PROFIT/LOSS PERCENTAGE: <span>{accuracyRA.toFixed(2)}%</span>
-            </h3>
-          ) : null}
-          <div
-            style={{ marginBottom: "150px", border: "1px solid white" }}
-          ></div>
+
           {data !== undefined && indicationDataAA !== undefined ? (
-            <StockChart
-              data={data}
-              buySellIndicators={indicationDataAA}
-              title={"Simple Moving Average Agent"}
-            />
+            <>
+              <StockChart
+                data={data}
+                buySellIndicators={indicationDataAA}
+                title={"Simple Moving Average Agent"}
+              />
+              <h3>
+                PROFIT/LOSS PERCENTAGE: <span>{accuracyAA.toFixed(2)}%</span>
+              </h3>
+              <div
+                style={{ marginBottom: "150px", border: "1px solid white" }}
+              ></div>
+            </>
           ) : null}
-          {accuracyAA !== undefined ? (
-            <h3>
-              PROFIT/LOSS PERCENTAGE: <span>{accuracyAA.toFixed(2)}%</span>
-            </h3>
-          ) : null}
-          <div
-            style={{ marginBottom: "150px", border: "1px solid white" }}
-          ></div>
+
           {dataQLA !== undefined && indicationDataQLA !== undefined ? (
-            <StockChart
-              data={dataQLA}
-              buySellIndicators={indicationDataQLA}
-              title={"Q-Learning Agent"}
-            />
+            <>
+              <StockChart
+                data={dataQLA}
+                buySellIndicators={indicationDataQLA}
+                title={"Q-Learning Agent"}
+              />
+              <h3>
+                PROFIT/LOSS PERCENTAGE: <span>{accuracyQLA.toFixed(2)}%</span>
+              </h3>
+              <div
+                style={{ marginBottom: "150px", border: "1px solid white" }}
+              ></div>
+            </>
           ) : null}
-          {accuracyQLA !== undefined ? (
-            <h3>
-              PROFIT/LOSS PERCENTAGE: <span>{accuracyQLA.toFixed(2)}%</span>
-            </h3>
-          ) : null}
-          <div
-            style={{ marginBottom: "150px", border: "1px solid white" }}
-          ></div>
+
           <CustomLoader open={isLoading} />
           {/* <StockChart data={data} buySellIndicators={indicationData} /> */}
         </div>

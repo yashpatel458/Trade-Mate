@@ -5,8 +5,7 @@
   },
   "About": {
     "paragraph1": " Welcome to TradeMate - an advanced AI-based software trading application that is designed to help traders make informed decisions in real-time. Our platform is powered by cutting-edge machine learning algorithms and artificial intelligence, making it one of the most advanced trading platforms available today.",
-"paragraph2": "TradeMate's core functionality lies in its ability to predict market prices and provide recommendations on when to buy or sell stocks at specific timestamps. Our platform analyzes market data in real-time, identifying patterns and trends to help traders make more informed decisions.",
-
+    "paragraph2": "TradeMate's core functionality lies in its ability to predict market prices and provide recommendations on when to buy or sell stocks at specific timestamps. Our platform analyzes market data in real-time, identifying patterns and trends to help traders make more informed decisions.",
     "Why": [
       "Accurate predictions",
       "Advanced technology",
@@ -143,17 +142,17 @@
     {
       "img": "img/team/03.jpg",
       "name": "Rohan Joshi",
-      "job": "ML Intern"
+      "job": "ML Developer"
     },
     {
       "img": "img/team/04.jpeg",
       "name": "Yash Patel",
-      "job": "Frontend Intern"
+      "job": "Frontend Developer"
     },
     {
       "img": "img/team/05.jpg",
       "name": "Priyank Akbari",
-      "job": "Fullstack Intern"
+      "job": "Fullstack Developer"
     }
   ],
   "Contact": {
